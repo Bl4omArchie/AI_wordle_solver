@@ -1,22 +1,45 @@
+from wordle.mword import Wordlist
 from random import randint
 import requests
 
 
-class Wordle():
-    def __init__(self, wordlist_link) -> None:
-        """ setup the wordlist"""
-        r = requests.get(wordlist_link)
-        self.word_list = r.text.split("\n")
+"""
+Main_gameboard:
+    - Automatic game:
+        - single solve
+        - multiple solve
 
-        self.word_to_guess = self.word_list[randint(0, len(self.word_list))]
-        self.result = ['c'] * 5
+    - Manual game:
+        - play
+
+Attributs available on every class:
+- wordlist: a list with all the word from the indicated wordlist
+- len_wordlist: the number of word in the wordlist
+- word_to_guess: the word to find
+- result: the state of every position ('c': letter find, 'm': letter in the wrong place, 'w': incorrect letter)
+"""
+
+
+def get_wordlist(link):
+    try:
+        return requests.get(link).text.split("\n")   
+    except:
+        raise ValueError("Your link seem to be incorrect")
+
+
+class Wordle_main_gameboard():
+    def __init__(self, wordlist_link) -> None:
+        """ setup the wordlist """
+
+        self.wordlist_obj = Wordlist(get_wordlist(wordlist_link))
+        self.word_to_guess = self.wordlist_obj.wordlist[randint(0, self.wordlist_obj.len_wordlist)]
+        self.result = ['w'] * 5
 
 
     def is_winning(self):
-        if self.result == ['c'] * 5:
-            return 1
-        else:
-            return 0 
+        #check if the game is finished
+        return self.result == ['c'] * 5
+
 
     def compare(self):
         for i in range(5):
@@ -29,15 +52,8 @@ class Wordle():
             else:
                 self.result[i] = 'w'
 
-    def board(self, guess):
-        c = 1
-        while c < 7:
-            end_turn = 0
-            while end_turn == 0:
-                self.compare(guess)
 
-
-class Game(Wordle):
+class Manual_game(Wordle_main_gameboard):
     def __init__(self, wordlist_link) -> None:
         super().__init__(wordlist_link)
 
@@ -49,7 +65,7 @@ class Game(Wordle):
             while end_turn == 0:
                 self.guess = input(f"Turn: {c} Input your 5 letters word guess: ")
 
-                if self.guess not in self.word_list or len(self.guess) != 5:
+                if self.guess not in self.main_wordlist or len(self.guess) != 5:
                     print ("\nNot in word list\n")
                     continue
 

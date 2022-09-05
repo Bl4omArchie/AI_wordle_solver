@@ -1,18 +1,18 @@
-from wordle.solver import IA_wordle_solver
-from wordle.game import Game
+from wordle.solver import IA_autosolver_game
+from wordle.game import Manual_game
 import argparse
 
 
 def play_game(link):                    #gamemod 1
-    obj = Game(link)
+    obj = Manual_game(link)
     obj.play()
 
 def play_bot_game(link):                #gamemod 2
-    obj = IA_wordle_solver(link)
+    obj = IA_autosolver_game(link)
     obj.play()
 
 def play_several_bot_game(nb, link):    #gamemod 3
-    obj = IA_wordle_solver(link)
+    obj = IA_autosolver_game(link)
     obj.automatic_play(nb)
 
 
@@ -32,6 +32,7 @@ if __name__ == "__main__":
     parser.add_argument("-n", type=int, help="Only for gamemod 3: the number of game for the bot")
     parser.add_argument("-w", help="By default we already have a wordlist, but you still can pick your own one. Indicate your web link")
     args = parser.parse_args()
+
 
     if args.g == 1:
         if args.w:
