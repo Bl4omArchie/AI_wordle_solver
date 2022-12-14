@@ -1,19 +1,20 @@
-from wordle.solver import IA_autosolver_game
-from wordle.game import Manual_game
+from src.wordlist import Wordlist
+from src.game import Wordle
+from src.launcher import *
 import argparse
 
+""" The main app where you can acces easily to the different gamemode"""
 
-def play_game(link):                    #gamemod 1
-    obj = Manual_game(link)
-    obj.play()
 
-def play_bot_game(link):                #gamemod 2
-    obj = IA_autosolver_game(link)
-    obj.play()
+def start_game(gamemod, link):                    #gamemod 1
+    wordlist = Wordlist(link)
+    game = Wordle(wordlist)
 
-def play_several_bot_game(nb, link):    #gamemod 3
-    obj = IA_autosolver_game(link)
-    obj.automatic_play(nb)
+    if gamemod == 1:
+        normal_play(game, wordlist)
+    
+    elif gamemod == 2:
+        AI_play(game, wordlist)
 
 
 if __name__ == "__main__":
@@ -21,33 +22,16 @@ if __name__ == "__main__":
     fr_link = "https://raw.githubusercontent.com/LouanBen/wordle-fr/main/mots.txt"
     en_link = "https://gist.githubusercontent.com/cfreshman/a7b776506c73284511034e63af1017ee/raw/dde79fe924c5869e18d02d04c26f37db1c3c1553/wordle-nyt-answers-alphabetical.txt"
     
-    #Bonus I will maybe add one day
+    #Bonus words that can be used as a guess for a more accurate answer. Not available now.
     en_allowed_guess_link = "https://gist.githubusercontent.com/cfreshman/40608e78e83eb4e1d60b285eb7e9732f/raw/2f51b4f2bb96c02e1dee37808b2eed4ef23a3150/wordle-nyt-allowed-guesses.txt"
-    """
+
 
     wordlist_link = "https://gist.githubusercontent.com/cfreshman/a7b776506c73284511034e63af1017ee/raw/dde79fe924c5869e18d02d04c26f37db1c3c1553/wordle-nyt-answers-alphabetical.txt"
+    """
 
-    parser = argparse.ArgumentParser(description="Wordle game app", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-g", type=int, help="Chose your gamemod: 1 for normal play, 2 for bot play and 3 for several bot play")
-    parser.add_argument("-n", type=int, help="Only for gamemod 3: the number of game for the bot")
-    parser.add_argument("-w", help="By default we already have a wordlist, but you still can pick your own one. Indicate your web link")
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('integers', metavar='N', type=int, nargs='+', help='an integer for the accumulator')
+
     args = parser.parse_args()
 
-
-    if args.g == 1:
-        if args.w:
-            wordlist_link = args.w
-        play_game(wordlist_link)
-
-    elif args.g == 2:
-        if args.w:
-            wordlist_link = args.w
-        play_bot_game(wordlist_link)
-
-    elif args.g == 3:
-        try:
-            if args.w:
-                wordlist_link = args.w
-            play_several_bot_game(args.n, wordlist_link)
-        except:
-            raise ValueError("For gamemod 3, you need to precise the number of game")
+    start_game(wordlist_link)
