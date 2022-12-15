@@ -7,12 +7,17 @@ import requests
 class Wordlist():
     def __init__(self, link) -> None:
         r = requests.get(link)
-        self.word_list = r.text.split("\n")
-        
-        for i in range(len(self.word_list)):
-            self.word_list[i] = [*self.word_list[i]]
+        self.wlist = r.text.split("\n")
+        self.wlist_size = len(self.wlist)
 
+        print (self.wlist)
 
+    
+    def split_word(self, word): #split every letter of the given word. ex: shark -> ['s', 'h', 'a', 'r', 'k']
+        return [*word]
+
+    def word_in_list(self, word):
+        return word in self.wlist
 
     def get_wordle(self):
-        return self.word_list[randint(0, len(self.word_list))]
+        return self.wlist[randint(0, self.wlist_size)]

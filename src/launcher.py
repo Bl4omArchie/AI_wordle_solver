@@ -1,6 +1,4 @@
 from src.solver import AI_wordle_solver
-from src.wordlist import Wordlist
-from src.game import Wordle
 
 """ Where you can launch wordle game """
 
@@ -14,8 +12,8 @@ def normal_play(game, wordlist):
         while end_turn == 0:
             guess = input(f"Turn: {t} Input your 5 letters word guess: ")
 
-            if guess not in wordlist or len(guess) != 5:
-                print ("\nThis word doesn't exist or len too long\n")
+            if len(guess) != 5 or wordlist.word_in_list(guess):
+                print ("\n[!] This word doesn't exist or len too long\n")
                 continue
 
             end_turn = 1

@@ -19,7 +19,7 @@ class Wordle:
         stat = 0
 
         for i in range(LIMIT_WORDLE):
-            stat = result[i] == STAT_ITEM[0]
+            stat = self.result[i] == STAT_ITEM[0]
         return stat
 
     
