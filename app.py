@@ -34,3 +34,6 @@ if __name__ == "__main__":
 
     if args.g == 1 or 2: 
         start_game(args.g, wordlist_link)
+
+    else:
+        print ("[!] Incorrect argument. Example: python3 app.py -g 1")

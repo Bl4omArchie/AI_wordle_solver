@@ -10,8 +10,6 @@ class Wordlist():
         self.wlist = r.text.split("\n")
         self.wlist_size = len(self.wlist)
 
-        print (self.wlist)
-
     
     def split_word(self, word): #split every letter of the given word. ex: shark -> ['s', 'h', 'a', 'r', 'k']
         return [*word]

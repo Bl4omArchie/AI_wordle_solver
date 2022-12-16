@@ -23,13 +23,25 @@ class Wordle:
         return stat
 
     
-    def change_result(self, word):
-        for i in range(LIMIT_WORDLE):
-            if word[i] == self.to_guess[i]:
-                self.result[i] == STAT_ITEM[0]
+    def change_result(self, word, word_to_guess):
+        """ Rules: for each letters
+        - if the guessed letter is at the right place: 'c'
 
-            elif not(word[i] != self.to_guess[i]) & word[i] in self.to_guess & word[i] not in word[:i]:
-                self.result[i] == STAT_ITEM[1]
+        - if the guessed letter at in the word but wrong place: 'm'
+        - but if guessed word had twice the same letter and the wordle only have it once: only the first will get the 'm', else: 'i'
+        
+        - if the guessed letter appear nowhere: 'i'
+
+        """
+        for i in range(LIMIT_WORDLE):
+            if word[i] == word_to_guess[i]:
+                self.result[i] = STAT_ITEM[0]
+                word_to_guess[i] = ""
+            
+
+            elif (word[i] != word_to_guess[i]) & (word[i] in word_to_guess):
+                self.result[i] = STAT_ITEM[1]
 
             else:
                 self.result[i] = STAT_ITEM[2]
+        
