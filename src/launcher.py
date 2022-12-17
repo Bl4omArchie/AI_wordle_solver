@@ -6,9 +6,6 @@ TURN_LIMIT = 6
 
 
 def normal_play(game, wordlist):
-
-    print (game.to_guess)
-    
     for t in range(1, TURN_LIMIT+1):
         end_turn = 0
         while end_turn == 0:
