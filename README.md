@@ -2,6 +2,8 @@
 
 A python wordle game with auto-solving
 
+![Alt text](https://labs.openai.com/s/X2uchCEKfBc4QUeuiunkPcMh)
+
 ```
 app.py: easy script where you call the game from command line and select your wordlist 
 src
